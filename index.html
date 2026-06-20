@@ -2,323 +2,33 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>OWNDAYS Central Hub</title>
+    <title>OWNDAYS Operation Hub</title>
     
+    <!-- 📱 คำสั่งบังคับเต็มจอ Standalone สำหรับ iPad -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
     <meta name="apple-mobile-web-app-title" content="OWNDAYS Hub">
+    
+    <!-- รูปไอคอนเครื่องบินรบ F-16 -->
     <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2800/2800258.png">
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://cdn-icons-png.flaticon.com/512/2800/2800258.png">
 
     <style>
-        :root { --primary-blue: #0071e3; --bg-color: #f5f5f7; --border-color: rgba(0, 0, 0, 0.1); --text-main: #1d1d1f; --text-muted: #86868b; --card-bg: #ffffff; }
-        body { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif; background-color: var(--bg-color); color: var(--text-main); margin: 0; overflow: hidden; padding-top: env(safe-area-inset-top); }
-        .hidden { display: none !important; }
-        .app-container { width: 100vw; height: 100vh; display: flex; flex-direction: column; }
-        
-        /* สไตล์แถบเมนูด้านบน */
-        .top-navbar { display: flex; gap: 8px; padding: 0 24px; background-color: rgba(255, 255, 255, 0.85); backdrop-filter: saturate(180%) blur(20px); border-bottom: 1px solid rgba(0, 0, 0, 0.08); overflow-x: auto; white-space: nowrap; height: 60px; align-items: center; }
-        .top-navbar::-webkit-scrollbar { display: none; }
-        .nav-btn { background-color: transparent; color: var(--text-muted); border: none; padding: 0 16px; height: 100%; font-size: 14px; font-weight: 500; cursor: pointer; border-bottom: 2px solid transparent; }
-        .nav-btn.active { color: var(--text-main); font-weight: 600; border-bottom: 2px solid var(--text-main); }
-        .btn-switch-user { color: #ff9500; margin-left: auto; font-weight: 500; background: transparent; border: none; height: 100%; padding: 0 16px; font-size: 14px; }
-        .shop-badge { font-size: 14px; font-weight: 600; color: var(--primary-blue); padding-right: 20px; border-right: 1px solid var(--border-color); margin-right: 12px; }
-        
-        /* สไตล์หน้าจอแอป */
-        .page-container { width: 100%; height: calc(100vh - 60px); position: relative; }
-        .page-content { display: none; width: 100%; height: 100%; background-color: #ffffff; }
-        .page-content.active { display: block; }
-        iframe { width: 100%; height: 100%; border: none; display: block; }
-        
-        /* สไตล์หน้าตารางข้อมูลและหน้าล็อกอิน */
-        .native-scroll-content { width: 100%; height: 100%; overflow-y: auto; padding: 24px; box-sizing: border-box; background-color: var(--bg-color); }
-        .apple-card { background-color: var(--card-bg); border-radius: 20px; padding: 24px; margin-bottom: 20px; box-shadow: 0 4px 24px rgba(0,0,0,0.04); border: 1px solid rgba(0,0,0,0.05); }
-        #login-section { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; }
-        .login-box { text-align: center; padding: 40px; border-radius: 20px; background: #ffffff; box-shadow: 0 4px 24px rgba(0,0,0,0.04); width: 95%; max-width: 440px; }
-        .staff-button-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; max-height: 200px; overflow-y: auto; margin-bottom: 16px; }
-        .staff-choice-card { padding: 14px 10px; border: 2px solid var(--border-color); border-radius: 12px; cursor: pointer; font-size: 14px; font-weight: 500; text-align: center; }
-        .staff-choice-card.selected { border-color: var(--primary-blue); background-color: rgba(0, 113, 227, 0.05); color: var(--primary-blue); font-weight: 600; }
-        .input-field { width: 100%; padding: 14px; margin-bottom: 12px; border: 1px solid var(--border-color); border-radius: 12px; font-size: 15px; text-align: center; }
-        .queue-huge-text { font-size: 72px; font-weight: 800; color: #108043; margin: 20px 0; letter-spacing: -0.02em; }
+        html, body {
+            margin: 0; padding: 0; width: 100%; height: 100%;
+            overflow: hidden; background-color: #f5f5f7;
+        }
+        iframe {
+            border: none; width: 100%; height: 100%;
+            display: block; padding-top: env(safe-area-inset-top); box-sizing: border-box;
+        }
     </style>
 </head>
 <body>
 
-    <div class="app-container">
-        <div id="wrapper-staff-view" class="hidden h-100 w-100">
-            <div id="login-section">
-                <div class="login-box">
-                    <img src="https://cdn-icons-png.flaticon.com/512/2800/2800258.png" style="width:64px; height:64px; margin-bottom:14px;">
-                    <h2>F-16 Operation Hub</h2>
-                    <div id="branch-display-name" style="color:var(--primary-blue); font-weight:bold; margin-bottom:15px; margin-top:10px;">⏳ กำลังตรวจสอบสิทธิ์สาขา...</div>
-                    <div id="staff-label" class="text-start fw-bold mb-2" style="font-size: 14px; display:none;">👤 เลือกชื่อพนักงานเพื่อเข้างาน:</div>
-                    <div id="staff-grid" class="staff-button-grid"></div>
-                    <button id="login-btn" class="btn btn-dark w-100 py-3 rounded-3 mt-3" onclick="doStaffLogin()" disabled>เข้าสู่ระบบ</button>
-                </div>
-            </div>
+    <!-- 🟢 [จุดแก้ไขสำคัญ] วางลิงก์ /exec ของ Google Script ลงในช่อง src ด้านล่างนี้แทนที่คำว่า ลิงก์_EXEC_ของคูณพี่ -->
+    <iframe src="ลิงก์_EXEC_ของคูณพี่"></iframe>
 
-            <div id="main-app" class="h-100 w-100" style="display:none;">
-                <div class="top-navbar">
-                    <img src="https://cdn-icons-png.flaticon.com/512/2800/2800258.png" style="width:24px; height:24px; margin-right:4px;">
-                    <span id="display-shop-name" class="shop-badge">...</span>
-                    
-                    <button class="nav-btn active" onclick="switchPage('app-res-list', this)">Reservation List</button>
-                    <button class="nav-btn" onclick="switchPage('app-tf-list', this); loadTransferListNative();">Transfer List</button>
-                    <button class="nav-btn" onclick="switchPage('app-transfer', this)">Transfer Form</button>
-                    
-                    <button class="btn-switch-user" onclick="doSwitchUser()"><i class="bi bi-person-lines-fill me-1"></i> ออกจากระบบ</button>
-                </div>
-                
-                <div class="page-container">
-                    <div id="app-res-list" class="page-content active"><iframe id="frame-res-list"></iframe></div>
-                    <div id="app-transfer" class="page-content"><iframe id="frame-transfer"></iframe></div>
-                    
-                    <div id="app-tf-list" class="page-content">
-                        <div class="native-scroll-content">
-                            <div class="apple-card">
-                                <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
-                                    <h4 class="m-0 fw-bold"><i class="bi bi-box-seam-fill text-primary me-2"></i> รายการโอนสินค้า (Transfer List)</h4>
-                                    <button onclick="loadTransferListNative()" class="btn btn-outline-primary btn-sm"><i class="bi bi-arrow-clockwise"></i> รีเฟรชข้อมูล</button>
-                                </div>
-                                <div id="transfer-table-container" class="table-responsive mt-3">
-                                    <div class="text-center p-5 text-muted">
-                                        <div class="spinner-border text-primary mb-3" role="status"></div>
-                                        <p>กำลังดึงข้อมูลจากระบบ กรุณารอสักครู่...</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div id="wrapper-kiosk-view" class="hidden h-100 w-100 d-flex align-items-center justify-content-center" style="background-color: #f5f5f7; padding: 15px;">
-            <div style="background: white; padding: 40px; border-radius: 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.05); width: 100%; max-width: 500px; text-align: center;">
-                <img src="https://cdn-icons-png.flaticon.com/512/2800/2800258.png" style="width:54px; margin-bottom:12px;">
-                <h2 class="fw-bold mb-1 text-dark">ลงทะเบียนคิวล้างแว่น</h2>
-                <p class="text-muted mb-4">รับบัตรคิวสาขา <span class="text-primary fw-bold shop-label-name">...</span></p>
-                <div id="kiosk-form-block">
-                    <input type="text" id="kiosk-cust-name" class="input-field py-3 rounded-3" placeholder="กรุณากรอกชื่อของคุณ (Name)">
-                    <input type="tel" id="kiosk-cust-phone" class="input-field py-3 rounded-3" placeholder="กรุณากรอกเบอร์โทรศัพท์ (Phone)">
-                    <button class="btn btn-primary w-100 py-3 fs-5 rounded-3 mt-2 fw-bold" onclick="generateQueueAPI('kiosk')">🎟️ กดรับตั๋วคิว</button>
-                </div>
-                <div id="kiosk-success-block" class="hidden">
-                    <div class="alert alert-success p-3 rounded-3 fw-bold mb-0">
-                        รับคิวสำเร็จ!
-                        <div id="kiosk-queue-number" class="queue-huge-text">---</div>
-                        <p class="text-muted fs-6 mb-0">ระบบกำลังสั่งพิมพ์สลิปคิวอัตโนมัติ...</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div id="wrapper-customer-view" class="hidden h-100 w-100 d-flex align-items-center justify-content-center" style="background-color: #f5f5f7; padding: 15px;">
-            <div style="background: white; padding: 40px; border-radius: 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.05); width: 100%; max-width: 500px; text-align: center;">
-                <h3 class="fw-bold text-dark mb-1">OWNDAYS Service Queue</h3>
-                <p class="text-muted mb-4">รับคิวผ่านสมาร์ตโฟนสาขา <span class="text-primary fw-bold shop-label-name">...</span></p>
-                <div id="customer-form-block">
-                    <input type="text" id="cust-name-input" class="input-field py-3 rounded-3" placeholder="ระบุชื่อของคุณ">
-                    <input type="tel" id="cust-phone-input" class="input-field py-3 rounded-3" placeholder="ระบุเบอร์โทรศัพท์ของคุณ">
-                    <button class="btn btn-primary w-100 py-3 rounded-3 fw-bold" onclick="generateQueueAPI('customer')">📱 ยืนยันข้อมูลรับคิว</button>
-                </div>
-                <div id="customer-success-block" class="hidden">
-                    <div class="alert alert-success p-4 rounded-4 text-center">
-                        <h5 class="fw-bold text-success mb-2">จองคิวสำเร็จ!</h5>
-                        <p class="mb-1">หมายเลขคิวของคุณคือ</p>
-                        <div id="customer-queue-number" class="queue-huge-text" style="font-size: 60px;">---</div>
-                        <p class="text-danger fw-bold fs-6 mb-0"><i class="bi bi-camera-fill"></i> โปรดแคปเจอร์หน้าจอนี้ไว้แสดงแก่พนักงาน</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // ================= ท่อส่งข้อมูล API ทั้งหมด =================
-        const BACKEND_API_URL = "https://script.google.com/macros/s/AKfycbyVZp09oHsU62CZvJVBBeEnOLtQrW3t8Ngxe3IFG-T90_AhoM-0UixTUW3dgmBSRdI1/exec"; // ลิงก์ระบบหลัก
-        const TRANSFER_API_URL = "https://script.google.com/macros/s/1WlPWp_G6b6h9mHIII6P-7Vw6IK1uLrYzxD9WguPY_QmVR0HqfREI4TWZG/exec"; // ลิงก์ระบบโอนของ
-        const EPSON_PRINTER_URL = "http://192.168.1.150:9100"; // IP เครื่องปริ้น (แก้ให้ตรงสาขา)
-
-        // ================= จัดการระบบเปิดหน้าแรก =================
-        const urlParams = new URLSearchParams(window.location.search);
-        const paramBranch = urlParams.get('branch') || localStorage.getItem("branchCode");
-        const paramMode = urlParams.get('mode');
-
-        let globalShopName = "";
-        let selectedStaffName = "";
-        let globalBranchCode = paramBranch;
-
-        window.onload = function() {
-            if (!paramBranch) return document.body.innerHTML = "<h3 class='text-center p-5 text-danger'>Access Denied: ไม่พบพารามิเตอร์สาขา</h3>";
-            localStorage.setItem("branchCode", paramBranch);
-
-            if (paramMode === 'kiosk') {
-                document.getElementById('wrapper-kiosk-view').classList.remove('hidden');
-                getBranchStatusAPI();
-            } else if (paramMode === 'customer') {
-                document.getElementById('wrapper-customer-view').classList.remove('hidden');
-                getBranchStatusAPI();
-            } else {
-                document.getElementById('wrapper-staff-view').classList.remove('hidden');
-                var cachedStaff = localStorage.getItem("owndays_staff");
-                var cachedShop = localStorage.getItem("shopName");
-                if (cachedShop && cachedStaff) {
-                    globalShopName = cachedShop;
-                    runStaffApplication(cachedStaff);
-                } else {
-                    getBranchStatusAPI();
-                }
-            }
-        };
-
-        // ================= ระบบยืนยันตัวตนพนักงาน =================
-        function getBranchStatusAPI() {
-            fetch(`${BACKEND_API_URL}?action=getStaff&branch=${globalBranchCode}`)
-                .then(res => res.json())
-                .then(res => {
-                    if (res.isValid) {
-                        globalShopName = res.shopCode;
-                        localStorage.setItem("shopName", res.shopCode);
-                        document.querySelectorAll('.shop-label-name').forEach(el => el.innerText = res.shopCode);
-                        document.getElementById("branch-display-name").innerText = "📍 สาขา: " + res.shopCode;
-                        document.getElementById("staff-label").style.display = "block";
-                        
-                        let grid = document.getElementById("staff-grid");
-                        grid.innerHTML = "";
-                        res.staff.forEach(name => {
-                            let btn = document.createElement("div");
-                            btn.className = "staff-choice-card"; btn.innerText = name;
-                            btn.onclick = () => {
-                                document.querySelectorAll('.staff-choice-card').forEach(el => el.classList.remove('selected'));
-                                btn.classList.add('selected'); selectedStaffName = name;
-                                document.getElementById("login-btn").disabled = false;
-                            };
-                            grid.appendChild(btn);
-                        });
-                    } else {
-                        document.getElementById("branch-display-name").innerHTML = "❌ " + (res.message || "รหัสสาขาไม่ถูกต้อง");
-                    }
-                }).catch(() => document.getElementById("branch-display-name").innerHTML = "❌ เน็ตเวิร์กขัดข้อง");
-        }
-
-        function doStaffLogin() {
-            if (!selectedStaffName) return;
-            localStorage.setItem("owndays_staff", selectedStaffName);
-            runStaffApplication(selectedStaffName);
-        }
-
-        function doSwitchUser() {
-            localStorage.removeItem("owndays_staff");
-            location.reload(); 
-        }
-
-        // ================= สลับเมนูหน้าต่าง =================
-        function switchPage(pageId, btn) {
-            document.querySelectorAll('.page-content').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active'); 
-            btn.classList.add('active');
-        }
-
-        function runStaffApplication(staffName) {
-            document.getElementById("login-section").style.display = "none";
-            document.getElementById("main-app").style.display = "block";
-            document.getElementById("display-shop-name").innerText = globalShopName + " (" + staffName + ")";
-            
-            // นำลิงก์หน้าเก่าที่ต้องใช้มาเสียบที่นี่ (เพื่อหนีปัญหาพนักงานหลุดหน้าเว็บ)
-            const buster = "&_nocache=" + Date.now();
-            document.getElementById("frame-transfer").src = TRANSFER_API_URL + "?page=index&branch=" + globalBranchCode + buster;
-        }
-
-        // ================= ดึงตาราง Transfer List (Native API รอดบล็อก Apple) =================
-        function loadTransferListNative() {
-            const tableContainer = document.getElementById("transfer-table-container");
-            tableContainer.innerHTML = `<div class="text-center p-5 text-muted"><div class="spinner-border text-primary mb-3"></div><p>กำลังดึงข้อมูลรายการโอนล่าสุด...</p></div>`;
-
-            fetch(`${TRANSFER_API_URL}?action=getTransferList&branch=${globalBranchCode}`)
-                .then(response => response.json())
-                .then(data => {
-                    if(!data || data.length === 0) {
-                        tableContainer.innerHTML = `<div class="alert alert-secondary text-center fw-bold">ไม่มีประวัติการโอนสินค้าในขณะนี้</div>`;
-                        return;
-                    }
-
-                    let html = `<table class="table table-hover table-bordered bg-white text-center align-middle" style="border-radius:10px; overflow:hidden;">`;
-                    html += `<thead class="table-dark"><tr><th>รายการ/รุ่น (Item)</th><th>จำนวน (Qty)</th><th>สถานะ (Status)</th></tr></thead><tbody>`;
-                    
-                    data.forEach(row => {
-                        let itemName = row[0] || row.itemName || "-";
-                        let qty = row[1] || row.qty || "-";
-                        let status = row[2] || row.status || "-";
-                        let badgeClass = status.includes("สำเร็จ") ? "bg-success" : "bg-warning text-dark";
-
-                        html += `<tr>
-                                    <td class="text-start fw-bold">${itemName}</td>
-                                    <td class="fs-5">${qty}</td>
-                                    <td><span class="badge ${badgeClass} p-2">${status}</span></td>
-                                 </tr>`;
-                    });
-                    
-                    html += `</tbody></table>`;
-                    tableContainer.innerHTML = html;
-                })
-                .catch(err => {
-                    tableContainer.innerHTML = `<div class="alert alert-danger text-center fw-bold">ไม่สามารถดึงข้อมูลได้ โปรดตรวจสอบอินเทอร์เน็ต</div>`;
-                });
-        }
-
-        // ================= ระบบคิวล้างแว่น & ปริ้นสลิป =================
-        function triggerSilentPrintLAN(queueNo, shopName) {
-            const ESC = "\x1B"; const GS = "\x1D";
-            let pCmd = ESC + "@" + ESC + "a" + "\x01" + GS + "!" + "\x00"; 
-            pCmd += "OWNDAYS\nคิวบริการล้างและปรับแต่งแว่น\nสาขา: " + shopName + "\n--------------------------------\n\n";
-            pCmd += GS + "!" + "\x11" + queueNo + "\n\n" + GS + "!" + "\x00";
-            pCmd += new Date().toLocaleDateString('th-TH') + " " + new Date().toLocaleTimeString('th-TH') + "\n";
-            pCmd += "กรุณารอพนักงานเรียกคิว ขอบคุณครับ\n" + ESC + "d" + "\x05" + GS + "V" + "\x42" + "\x00";
-            fetch(EPSON_PRINTER_URL, { method: "POST", mode: "no-cors", body: pCmd }).catch(e => console.log("Print LAN Offline profile."));
-        }
-
-        function generateQueueAPI(type) {
-            const name = document.getElementById(type === 'kiosk' ? 'kiosk-cust-name' : 'cust-name-input').value.trim();
-            const phone = document.getElementById(type === 'kiosk' ? 'kiosk-cust-phone' : 'cust-phone-input').value.trim();
-            
-            if (!name || !phone) { alert("กรุณากรอกข้อมูลให้ครบถ้วนก่อนรับคิวครับ"); return; }
-            
-            const payload = { action: "registerQueue", branch: globalBranchCode, name: name, phone: phone, source: type };
-            
-            fetch(BACKEND_API_URL + "?action=registerQueue", { method: "POST", body: JSON.stringify(payload) })
-            .then(response => response.json())
-            .then(res => {
-                let queueNo = res.queueNumber || "C000";
-                if (type === 'kiosk') {
-                    document.getElementById('kiosk-form-block').classList.add('hidden');
-                    document.getElementById('kiosk-queue-number').innerText = queueNo;
-                    document.getElementById('kiosk-success-block').classList.remove('hidden');
-                    triggerSilentPrintLAN(queueNo, globalShopName);
-                    
-                    setTimeout(() => {
-                        document.getElementById('kiosk-cust-name').value = ""; document.getElementById('kiosk-cust-phone').value = "";
-                        document.getElementById('kiosk-success-block').classList.add('hidden'); document.getElementById('kiosk-form-block').classList.remove('hidden');
-                    }, 4000);
-                } else {
-                    document.getElementById('customer-form-block').classList.add('hidden');
-                    document.getElementById('customer-queue-number').innerText = queueNo;
-                    document.getElementById('customer-success-block').classList.remove('hidden');
-                }
-            }).catch(err => {
-                let mockQ = (type === 'kiosk' ? 'C' : 'M') + Math.floor(100 + Math.random() * 899);
-                if (type === 'kiosk') {
-                    document.getElementById('kiosk-form-block').classList.add('hidden');
-                    document.getElementById('kiosk-queue-number').innerText = mockQ;
-                    document.getElementById('kiosk-success-block').classList.remove('hidden');
-                    triggerSilentPrintLAN(mockQ, globalShopName);
-                }
-            });
-        }
-    </script>
 </body>
 </html>
